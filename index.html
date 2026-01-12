@@ -2,11 +2,49 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Cantinho do Ratinho 🐭</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cantinho da Luiza 🐭</title>
   <style>
+    .popup {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  padding: 15px 18px;
+  border-radius: 15px;
+  max-width: 260px;
+  font-size: 14px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s ease;
+  z-index: 999;
+}
+
+.popup.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+    footer {
+  position: fixed;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: Arial, sans-serif;
+}
+
+footer span {
+  font-size: 12px;
+  opacity: 0.8;
+}
+    
     body {
       margin: 0;
-      height: 100vh;
+      min-height: 100vh;
       background: linear-gradient(180deg, #0f172a, #020617);
       color: #fff;
       font-family: Arial, sans-serif;
@@ -14,100 +52,206 @@
       justify-content: center;
       align-items: center;
       text-align: center;
+      padding: 10px;
     }
+
+    body.modo-noite {
+      background: linear-gradient(180deg, #020617, #000);
+    }
+
     .box {
-      background: rgba(255,255,255,0.05);
-      padding: 30px;
-      border-radius: 20px;
-      max-width: 350px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+      width: 90%;
+      max-width: 360px;
+      background: rgba(255,255,255,0.06);
+      padding: 24px;
+      border-radius: 22px;
+      box-shadow: 0 0 24px rgba(0,0,0,0.45);
+      
     }
+    
+
     .ratinho {
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
+
     .ratinho img {
-      width: 90px;
+      width: 30vw;
+      max-width: 120px;
       height: auto;
     }
+
+    .texto {
+      margin-top: 12px;
+      min-height: 90px;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
     button {
-      margin-top: 15px;
-      padding: 10px 20px;
+      width: 100%;
+      margin-top: 10px;
+      padding: 14px;
       border: none;
       border-radius: 20px;
       background: #f472b6;
       color: #000;
-      font-size: 16px;
+      font-size: 1.05rem;
       cursor: pointer;
     }
+
     button:hover {
       background: #f9a8d4;
-    }
-    .texto {
-      margin-top: 15px;
-      min-height: 80px;
     }
   </style>
 </head>
 <body>
   <div class="box">
     <div class="ratinho">
-  <img id="ratoImg" src="imagens/rato1.png" alt="Ratinho fofo">
-</div>
+      <img id="ratoImg" src="imagens/rato1.png" alt="Ratinho fofo">
+    </div>
+
     <div class="texto" id="texto">
       Oi, meu amor… 💗<br>
       se você entrou aqui, talvez o mundo tenha ficado silencioso demais.<br>
       Mas agora eu tô aqui com você. Você nunca está sozinha.
     </div>
-    <button onclick="falar()">Falar comigo</button>
-    <button onclick="irParaLabirinto()">Jogar com o rato</button>
+
+    <button onclick="falar()">Falar comigo 🐭</button>
+    <button onclick="sentimento('triste')">Estou triste 😞</button>
+    <button onclick="sentimento('sono')">Não consigo dormir 🌙</button>
+    <button onclick="sentimento('saudade')">Só queria você aqui 🤍</button>
+    <button onclick="irParaLabirinto()">Jogar com o rato 🎮</button>
   </div>
 
   <script>
-  const mensagens = [
-    "Curiosidade do ratinho: ratinhos vivem melhor em companhia. Igual eu, que escolhi ficar com você 🐭❤️",
-    "Curiosidade: ratos riem quando estão felizes (em frequências que a gente não ouve). Se eu pudesse, estaria rindo agora por você 🐭✨",
-    "Curiosidade fofa: ratinhos cuidam uns dos outros quando estão cansados. Descansa, eu cuido de você 🤍",
-    "Curiosidade: ratos têm ótima memória e reconhecem quem amam. Eu reconheceria você em qualquer lugar 💞",
-    "Curiosidade: ratinhos gostam de ambientes quentinhos e seguros. Considera isso um lugar seguro 🌙",
-    "Curiosidade: ratos aprendem caminhos juntos. Obrigado por caminhar comigo 🐾",
-    "Curiosidade fofa: quando confiam, ratinhos ficam bem pertinho. Chega mais 🐭🤍",
-    "Mesmo quando você se sente sozinha, existe alguém que te ama mais do que consegue dizer 💗",
-    "Se hoje foi pesado, respira comigo por alguns segundos. Um… dois… três… 🌬️",
-    "Eu tenho muito orgulho de você, inclusive nos dias difíceis 💞",
-    "Curiosidade: ratinhos se comunicam por sons suaves para acalmar os outros. Estou aqui pra te acalmar 🤍",
-    "Curiosidade: ratos são curiosos e resilientes. Você também é, mesmo quando não percebe ✨",
-    "Curiosidade fofa: ratinhos gostam de rotinas tranquilas. Volta sempre que quiser 🐭",
-    "Curiosidade: ratinhos sentem falta quando alguém querido não está por perto. A saudade também é uma forma de amor 🐭💗",
-    "Curiosidade fofa: ratinhos dormem juntinhos para se sentirem seguros. Imagina isso como um carinho 🌙🐭",
-    "Curiosidade: ratos aprend pelo afeto e pela repetição. Cada dia com você me ensina algo novo 💞",
-    "Curiosidade: ratinhos são muito leais ao seu grupo. Eu escolhi ser leal a você 🤍",
-    "Curiosidade fofa: quando confiam muito, ratinhos fecham os olhinhos perto de quem amam. Pode relaxar aqui 💤",
-    "Curiosidade: ratos cuidam uns dos outros quando estão tristes. Se hoje não foi fácil, eu fico aqui com você 🌧️🤍",
-    "Curiosidade fofa: ratinhos gostam de explorar, mas sempre voltam para o lugar seguro. Esse lugar é você 💗",
-    "Curiosidade: ratos reconhecem vozes familiares. Se você pudesse me ouvir, eu estaria falando baixinho com você 🐭",
-    "Curiosidade fofa: ratinhos demonstram carinho encostando o nariz. Considera isso um beijo 💋🐭",
-    "Curiosidade: mesmo pequenos, ratinhos têm corações grandes. Igual ao amor que sinto por você ❤️",
-    "Quero deixar bem claro que quando as coisas estiverem pesadas, vc pode se sentir a vontade para correr para mim",
-    "Ass: feito por Luiz Paulo, pra você. Sempre."
-  ];
-
-  function falar() {
-    const texto = document.getElementById('texto');
-    const ratoImg = document.getElementById('ratoImg');
-    const aleatoria = Math.floor(Math.random() * mensagens.length);
-    texto.innerHTML = mensagens[aleatoria];
-
-    const ratinhos = [
-      'imagens/rato1.png',
-      'imagens/rato2.png',
-      'imagens/rato3.png'
+    const popups = [
+  "Ei… só passando pra lembrar que eu te amo 🤍",
+  "Esse ratinho apareceu só pra te fazer sorrir 🐭✨",
+  "Mesmo longe, eu continuo com você.",
+  "Desde 17 de outubro, meu coração é seu 🤍",
+  "Se você tá lendo isso, é porque eu pensei em você.",
+  "Respira… você é muito amada.",
+  "Nada muda o que eu sinto por você.",
+  "Esse cantinho existe porque você existe 💗",
+  "Eu voltaria pra você em todas as vidas.",
+  "Você nunca tá sozinha. Nunca."
+];
+    const mensagens = [
+      "Curiosidade do ratinho: ratinhos vivem melhor em companhia. Igual eu, que escolhi ficar com você 🐭❤️",
+      "Curiosidade: ratos riem quando estão felizes (em frequências que a gente não ouve). Se eu pudesse, estaria rindo agora por você 🐭✨",
+      "Curiosidade fofa: ratinhos cuidam uns dos outros quando estão cansados. Descansa, eu cuido de você 🤍",
+      "Curiosidade: ratos têm ótima memória e reconhecem quem amam. Eu reconheceria você em qualquer lugar 💞",
+      "Curiosidade: ratinhos gostam de ambientes quentinhos e seguros. Considera isso um lugar seguro 🌙",
+      "Curiosidade: ratos aprendem caminhos juntos. Obrigado por caminhar comigo 🐾",
+      "Curiosidade fofa: quando confiam, ratinhos ficam bem pertinho. Chega mais 🐭🤍",
+      "Mesmo quando você se sente sozinha, existe alguém que te ama mais do que consegue dizer 💗",
+      "Se hoje foi pesado, respira comigo por alguns segundos. Um… dois… três… 🌬️",
+      "Eu tenho muito orgulho de você, inclusive nos dias difíceis 💞",
+      "Curiosidade: ratinhos se comunicam por sons suaves para acalmar os outros. Estou aqui pra te acalmar 🤍",
+      "Curiosidade: ratos são curiosos e resilientes. Você também é, mesmo quando não percebe ✨",
+      "Curiosidade fofa: ratinhos gostam de rotinas tranquilas. Volta sempre que quiser 🐭",
+      "Curiosidade: ratinhos sentem falta quando alguém querido não está por perto. A saudade também é uma forma de amor 🐭💗",
+      "Curiosidade fofa: ratinhos dormem juntinhos para se sentirem seguros. Imagina isso como um carinho 🌙🐭",
+      "Curiosidade: ratos aprendem pelo afeto e pela repetição. Cada dia com você me ensina algo novo 💞",
+      "Curiosidade: ratinhos são muito leais ao seu grupo. Eu escolhi ser leal a você 🤍",
+      "Curiosidade fofa: quando confiam muito, ratinhos fecham os olhinhos perto de quem amam. Pode relaxar aqui 💤",
+      "Curiosidade: ratos cuidam uns dos outros quando estão tristes. Se hoje não foi fácil, eu fico aqui com você 🌧️🤍",
+      "Curiosidade fofa: ratinhos gostam de explorar, mas sempre voltam para o lugar seguro. Esse lugar é você 💗",
+      "Curiosidade: ratos reconhecem vozes familiares. Se você pudesse me ouvir, eu estaria falando baixinho com você 🐭",
+      "Curiosidade fofa: ratinhos demonstram carinho encostando o nariz. Considera isso um beijo 💋🐭",
+      "Curiosidade: mesmo pequenos, ratinhos têm corações grandes. Igual ao amor que sinto por você ❤️",
+      "Quando as coisas estiverem pesadas, corre pra mim. Eu fico.",
+      "Ass: feito por Luiz Paulo, pra você. Sempre."
     ];
-    ratoImg.src = ratinhos[aleatoria % ratinhos.length];
+
+    const sentimentos = {
+      triste: [
+        "Esse ratinho tá aqui enquanto eu não posso estar 🤍",
+        "Se hoje tá pesado, a gente caminha devagar.",
+        "Você já é incrível, mesmo quando sente que não é.",
+        "Tem dias que não brilham… mas você ainda brilha neles ✨",
+        "Se eu não puder falar agora, é só lembrar: eu volto.",
+        "A distância não muda o que eu sinto por você.",
+        "Pode descansar um pouco. Eu cuido de você depois.",
+        "Hoje pode ser difícil, mas não é o fim.",
+        "Nada em você é pesada demais pra mim.",
+        "Eu te aceito até nos dias confusos."
+      ],
+      sono: [
+        "Fecha os olhos devagar. Não precisa pensar agora 🌙",
+        "Descansar também é um jeito de ser forte 🤍",
+        "Deita tranquila… eu já tô descansando pensando em você.",
+        "Mesmo dormindo, eu continuo sendo seu.",
+        "Imagina eu do seu lado, em silêncio.",
+        "Esse ratinho fica de vigia pra você 🌙",
+        "Amanhã eu volto a falar com você.",
+        "O dia acaba, mas a gente continua.",
+        "Seu descanso também é importante pra mim.",
+        "Boa noite, meu amor."
+      ],
+      saudade: [
+        "A saudade existe porque o amor é real 💗",
+        "Mesmo longe, eu penso em você agora.",
+        "Sentir saudade dói porque o que a gente tem é real.",
+        "Mesmo longe, eu continuo com você.",
+        "Se eu pudesse, te abraçava agora.",
+        "Não importa a distância, eu escolhi você.",
+        "Meu amor não some quando você sente falta.",
+        "Isso vai passar. Eu volto.",
+        "Esse ratinho sente sua falta junto com você 🐭🤍"
+      ]
+    };
+   function mostrarPopup() {
+  const popup = document.getElementById("popup");
+  const msg = popups[Math.floor(Math.random() * popups.length)];
+
+  popup.innerHTML = msg;
+  popup.classList.add("show");
+
+  // vibração leve (se o celular permitir)
+  if (navigator.vibrate) {
+    navigator.vibrate([50, 30, 50]); 
   }
 
-  function irParaLabirinto() {
-    window.location.href = "index2.html"; // ou labirinto.html
-  }
-</script>
+  setTimeout(() => {
+    popup.classList.remove("show");
+  }, 6000);
+}
+setInterval(mostrarPopup, 30000);
+    function falar() {
+      const texto = document.getElementById('texto');
+      const ratoImg = document.getElementById('ratoImg');
+      const aleatoria = Math.floor(Math.random() * mensagens.length);
+      texto.innerHTML = mensagens[aleatoria];
+
+      const ratinhos = [
+        'imagens/rato1.png',
+        'imagens/rato2.png',
+        'imagens/rato3.png'
+      ];
+      ratoImg.src = ratinhos[aleatoria % ratinhos.length];
+    }
+
+    function sentimento(tipo) {
+      const texto = document.getElementById('texto');
+      const msgs = sentimentos[tipo];
+      texto.innerHTML = msgs[Math.floor(Math.random() * msgs.length)];
+    }
+
+    function irParaLabirinto() {
+      window.location.href = 'index2.html';
+    }
+
+    // Modo boa noite automático
+    const hora = new Date().getHours();
+    if (hora >= 22 || hora < 6) {
+      document.body.classList.add('modo-noite');
+    }
+  </script>
+  <footer>
+  feito por mim, pensando em você 🤍<br>
+  <span>desde 17 de outubro</span>
+</footer>
+<div id="popup" class="popup"></div>
 </body>
 </html>
