@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cantinho do Ratinho 🐭</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(180deg, #0f172a, #020617);
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .box {
+      background: rgba(255,255,255,0.05);
+      padding: 30px;
+      border-radius: 20px;
+      max-width: 350px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    }
+    .ratinho {
+      margin-bottom: 10px;
+    }
+    .ratinho img {
+      width: 90px;
+      height: auto;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      background: #f472b6;
+      color: #000;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #f9a8d4;
+    }
+    .texto {
+      margin-top: 15px;
+      min-height: 80px;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="ratinho">
+  <img id="ratoImg" src="imagens/rato1.png" alt="Ratinho fofo">
+</div>
+    <div class="texto" id="texto">
+      Oi, meu amor… 💗<br>
+      se você entrou aqui, talvez o mundo tenha ficado silencioso demais.<br>
+      Mas agora eu tô aqui com você. Você nunca está sozinha.
+    </div>
+    <button onclick="falar()">Falar comigo</button>
+    <button onclick="irParaLabirinto()">Jogar com o rato</button>
+  </div>
+
+  <script>
+  const mensagens = [
+    "Curiosidade do ratinho: ratinhos vivem melhor em companhia. Igual eu, que escolhi ficar com você 🐭❤️",
+    "Curiosidade: ratos riem quando estão felizes (em frequências que a gente não ouve). Se eu pudesse, estaria rindo agora por você 🐭✨",
+    "Curiosidade fofa: ratinhos cuidam uns dos outros quando estão cansados. Descansa, eu cuido de você 🤍",
+    "Curiosidade: ratos têm ótima memória e reconhecem quem amam. Eu reconheceria você em qualquer lugar 💞",
+    "Curiosidade: ratinhos gostam de ambientes quentinhos e seguros. Considera isso um lugar seguro 🌙",
+    "Curiosidade: ratos aprendem caminhos juntos. Obrigado por caminhar comigo 🐾",
+    "Curiosidade fofa: quando confiam, ratinhos ficam bem pertinho. Chega mais 🐭🤍",
+    "Mesmo quando você se sente sozinha, existe alguém que te ama mais do que consegue dizer 💗",
+    "Se hoje foi pesado, respira comigo por alguns segundos. Um… dois… três… 🌬️",
+    "Eu tenho muito orgulho de você, inclusive nos dias difíceis 💞",
+    "Curiosidade: ratinhos se comunicam por sons suaves para acalmar os outros. Estou aqui pra te acalmar 🤍",
+    "Curiosidade: ratos são curiosos e resilientes. Você também é, mesmo quando não percebe ✨",
+    "Curiosidade fofa: ratinhos gostam de rotinas tranquilas. Volta sempre que quiser 🐭",
+    "Curiosidade: ratinhos sentem falta quando alguém querido não está por perto. A saudade também é uma forma de amor 🐭💗",
+    "Curiosidade fofa: ratinhos dormem juntinhos para se sentirem seguros. Imagina isso como um carinho 🌙🐭",
+    "Curiosidade: ratos aprend pelo afeto e pela repetição. Cada dia com você me ensina algo novo 💞",
+    "Curiosidade: ratinhos são muito leais ao seu grupo. Eu escolhi ser leal a você 🤍",
+    "Curiosidade fofa: quando confiam muito, ratinhos fecham os olhinhos perto de quem amam. Pode relaxar aqui 💤",
+    "Curiosidade: ratos cuidam uns dos outros quando estão tristes. Se hoje não foi fácil, eu fico aqui com você 🌧️🤍",
+    "Curiosidade fofa: ratinhos gostam de explorar, mas sempre voltam para o lugar seguro. Esse lugar é você 💗",
+    "Curiosidade: ratos reconhecem vozes familiares. Se você pudesse me ouvir, eu estaria falando baixinho com você 🐭",
+    "Curiosidade fofa: ratinhos demonstram carinho encostando o nariz. Considera isso um beijo 💋🐭",
+    "Curiosidade: mesmo pequenos, ratinhos têm corações grandes. Igual ao amor que sinto por você ❤️",
+    "Quero deixar bem claro que quando as coisas estiverem pesadas, vc pode se sentir a vontade para correr para mim",
+    "Ass: feito por Luiz Paulo, pra você. Sempre."
+  ];
+
+  function falar() {
+    const texto = document.getElementById('texto');
+    const ratoImg = document.getElementById('ratoImg');
+    const aleatoria = Math.floor(Math.random() * mensagens.length);
+    texto.innerHTML = mensagens[aleatoria];
+
+    const ratinhos = [
+      'imagens/rato1.png',
+      'imagens/rato2.png',
+      'imagens/rato3.png'
+    ];
+    ratoImg.src = ratinhos[aleatoria % ratinhos.length];
+  }
+
+  function irParaLabirinto() {
+    window.location.href = "index2.html"; // ou labirinto.html
+  }
+</script>
+</body>
+</html>
