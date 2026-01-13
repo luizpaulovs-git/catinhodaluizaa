@@ -6,16 +6,6 @@
 <title>Mini Jogos 🐭</title>
 
 <style>
-    footer#footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
-  padding: 10px 0;
-  font-size: 14px;
-  background: var(--footer-bg, #0f0f0f);
-  color: var(--footer-text, #aaa);
-}
 body {
   margin: 0;
   min-height: 100vh;
@@ -44,6 +34,7 @@ h1 {
   border-radius: 20px;
   padding: 20px;
   box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  margin-bottom: 20px;
 }
 
 .card img {
@@ -72,58 +63,74 @@ button:hover {
 }
 
 footer {
-  margin-top: 20px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
   font-size: 12px;
-  opacity: 0.7;
+  background: #0f0f0f;
+  color: #aaa;
 }
 </style>
 </head>
 
 <body>
+
 <div class="container">
   <h1>Mini Jogos 🐭</h1>
 
+  <!-- Labirinto -->
   <div class="card">
     <img src="imagens/labirinto.png" alt="Labirinto do Ratinho">
     <h2>Labirinto do Ratinho</h2>
-    <button onclick="jogar()">Jogar</button>
+    <button onclick="jogarLabirinto()">Jogar</button>
   </div>
-  <div class="card" style="margin-top:20px;">
-  <img src="imagens/memoria.png" alt="Jogo da Memória">
-  <h2>jogo da memória</h2>
-  <div class="card" style="margin-top:20px;">
-  <img src="imagens/memoria.png" alt="Jogo da Memória">
-  <h2>jogo da velha</h2>
-  <button onclick="jogarvelha()">Jogar</button>
-  <div class="card" style="margin-top:20px;">
-  <img src="imagens/ratinho.png">
-  <h2>Ratinho Pegador</h2>
-  <button onclick="jogarratinho('ratinho.html')">Jogar</button>
-</div>
-  
-</div>
+
+  <!-- Memória -->
+  <div class="card">
+    <img src="imagens/memoria.png" alt="Jogo da Memória">
+    <h2>Jogo da Memória</h2>
+    <button onclick="jogarMemoria()">Jogar</button>
+  </div>
+
+  <!-- Jogo da Velha -->
+  <div class="card">
+    <img src="imagens/velha.png" alt="Jogo da Velha">
+    <h2>Jogo da Velha</h2>
+    <button onclick="jogarVelha()">Jogar</button>
+  </div>
+
+  <!-- Ratinho Pegador -->
+  <div class="card">
+    <img src="imagens/ratinho.png" alt="Ratinho Pegador">
+    <h2>Ratinho Pegador</h2>
+    <button onclick="jogarRatinho()">Jogar</button>
+  </div>
 </div>
 
-  <footer>
-    feito por mim, pensando em você 🤍<br>
-    desde 17 de outubro
-  </footer>
-</div>
+<footer>
+  feito por mim, pensando em você 🤍<br>
+  desde 17 de outubro
+</footer>
 
 <script>
-function jogar() {
+function jogarLabirinto() {
   window.location.href = "jogodolabirinto.html";
 }
+
 function jogarMemoria() {
   window.location.href = "jogodamemoria.html";
-  
 }
-function jogarratinho() {
-  window.location.href = "ratinhopegador.html";
-}
-function jogarvelha() {
+
+function jogarVelha() {
   window.location.href = "velha.html";
 }
+
+function jogarRatinho() {
+  window.location.href = "ratinhopegador.html";
+}
 </script>
+
 </body>
 </html>
