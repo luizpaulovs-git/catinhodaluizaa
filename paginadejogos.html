@@ -91,12 +91,11 @@ footer {
   <div class="card" style="margin-top:20px;">
   <img src="imagens/memoria.png" alt="Jogo da Memória">
   <h2>jogo da memória</h2>
-  <button onclick="jogarMemoria()">Jogar</button>
   <div class="card" style="margin-top:20px;">
-  <img src="imagens/velha.png" alt="Jogo da Velha">
-  <h2>Jogo da Velha 🐭</h2>
-  <button onclick="window.location.href='jogo-da-velha.html'">Jogar</button>
-  <div class="card">
+  <img src="imagens/memoria.png" alt="Jogo da Memória">
+  <h2>jogo da velha</h2>
+  <button onclick="jogarvelha()">Jogar</button>
+  <div class="card" style="margin-top:20px;">
   <img src="imagens/ratinho.png">
   <h2>Ratinho Pegador</h2>
   <button onclick="jogarratinho('ratinho.html')">Jogar</button>
@@ -121,6 +120,9 @@ function jogarMemoria() {
 }
 function jogarratinho() {
   window.location.href = "ratinhopegador.html";
+}
+function jogarvelha() {
+  window.location.href = "velha.html";
 }
 </script>
 </body>
