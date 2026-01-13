@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ratinho Pegador</title>
+  <style>
+    footer#footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 14px;
+  background: var(--footer-bg, #0f0f0f);
+  color: var(--footer-text, #aaa);
+}
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--site-bg, var(--dark-bg, #121212)); /* força fundo escuro */
+      color: var(--game-text, #ffffff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    #game {
+      width: 100%;
+      max-width: 420px;
+      height: 70vh;
+      max-height: 600px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      background: var(--game-bg, var(--dark-bg, #1e1e1e)); /* mesma cor dos outros jogos */
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    }
+
+    #hud {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      display: flex;
+      justify-content: space-between;
+      font-weight: bold;
+      z-index: 2;
+      color: var(--game-text, #ffffff);
+    }
+
+    #player {
+      width: 60px;
+      height: 60px;
+      position: absolute;
+      bottom: 60px;
+      left: 180px;
+      font-size: 40px;
+      text-align: center;
+      z-index: 2;
+    }
+
+    .item {
+      position: absolute;
+      top: -40px;
+      font-size: 30px;
+    }
+
+    #controls {
+      position: absolute;
+      bottom: 5px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px;
+      z-index: 3;
+    }
+
+    #controls button {
+      font-size: 28px;
+      padding: 10px 25px;
+      border-radius: 12px;
+      border: none;
+      background: var(--game-button-bg, #2a2a2a);
+      color: var(--game-button-text, #ffffff);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="game">
+    <div id="hud">
+      <div>Pontos: <span id="score">0</span></div>
+      <div>Vidas: <span id="lives">3</span> ❤️</div>
+    </div>
+
+    <div id="player">🐭</div>
+
+    <div id="controls">
+      <button id="left">⬅️</button>
+      <button id="right">➡️</button>
+    </div>
+  </div>
+
+  <script>
+    const game = document.getElementById("game");
+    const player = document.getElementById("player");
+    const scoreEl = document.getElementById("score");
+    const livesEl = document.getElementById("lives");
+    const btnLeft = document.getElementById("left");
+    const btnRight = document.getElementById("right");
+
+    let score = 0;
+    let lives = 3;
+    let playerX = 180;
+
+    const items = ["🧀", "🍎", "🍌", "🍓"];
+
+    function updatePlayer() {
+      const maxX = game.clientWidth - 60;
+      playerX = Math.max(0, Math.min(maxX, playerX));
+      player.style.left = playerX + "px";
+    }
+
+    function moveLeft() {
+      playerX -= 25;
+      updatePlayer();
+    }
+
+    function moveRight() {
+      playerX += 25;
+      updatePlayer();
+    }
+
+    // Controles PC
+    document.addEventListener("keydown", e => {
+      if (e.key === "ArrowLeft") moveLeft();
+      if (e.key === "ArrowRight") moveRight();
+    });
+
+    // Controles Mobile (touch + click)
+    function bindButton(btn, action) {
+      btn.addEventListener("touchstart", e => {
+        e.preventDefault();
+        action();
+      });
+      btn.addEventListener("click", action);
+    }
+
+    bindButton(btnLeft, moveLeft);
+    bindButton(btnRight, moveRight);
+
+    // evita scroll ao tocar nos botões
+    document.body.addEventListener("touchmove", e => {
+      if (e.target.closest('#controls')) e.preventDefault();
+    }, { passive: false });
+
+    btnRight.addEventListener("touchstart", moveRight);
+
+    function createItem() {
+      const item = document.createElement("div");
+      item.className = "item";
+      item.innerText = items[Math.floor(Math.random() * items.length)];
+      item.style.left = Math.random() * (game.clientWidth - 30) + "px";
+      game.appendChild(item);
+
+      let y = -40;
+      const fall = setInterval(() => {
+        y += 4;
+        item.style.top = y + "px";
+
+        const itemRect = item.getBoundingClientRect();
+        const playerRect = player.getBoundingClientRect();
+
+        if (
+          itemRect.bottom >= playerRect.top &&
+          itemRect.left <= playerRect.right &&
+          itemRect.right >= playerRect.left
+        ) {
+          score++;
+          scoreEl.innerText = score;
+          item.remove();
+          clearInterval(fall);
+        }
+
+        if (y > game.clientHeight) {
+          lives--;
+          livesEl.innerText = lives;
+          item.remove();
+          clearInterval(fall);
+
+          if (lives === 0) {
+            alert("Fim de jogo! Pontuação: " + score);
+            location.reload();
+          }
+        }
+      }, 20);
+    }
+
+    setInterval(createItem, 1200);
+  </script>
+  <!-- Rodapé padrão do site -->
+<footer id="footer">
+  <p>
+    feito por mim, pensando em você 🤍<br>
+    desde 17 de outubro</p>
+</footer>
+
+
+</body>
+</html>

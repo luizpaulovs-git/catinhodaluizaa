@@ -120,7 +120,7 @@ footer span {
     <button onclick="sentimento('triste')">Estou triste 😞</button>
     <button onclick="sentimento('sono')">Não consigo dormir 🌙</button>
     <button onclick="sentimento('saudade')">Só queria você aqui 🤍</button>
-    <button onclick="irParaLabirinto()">Jogar com o rato 🎮</button>
+    <button onclick="irParaMiniJogos()">Mini-jogos 🐭</button>
   </div>
 
   <script>
@@ -217,7 +217,7 @@ footer span {
     popup.classList.remove("show");
   }, 6000);
 }
-setInterval(mostrarPopup, 30000);
+setInterval(mostrarPopup, 20000);
     function falar() {
       const texto = document.getElementById('texto');
       const ratoImg = document.getElementById('ratoImg');
@@ -238,8 +238,8 @@ setInterval(mostrarPopup, 30000);
       texto.innerHTML = msgs[Math.floor(Math.random() * msgs.length)];
     }
 
-    function irParaLabirinto() {
-      window.location.href = 'index2.html';
+    function irParaMiniJogos() {
+      window.location.href = 'paginadejogos.html';
     }
 
     // Modo boa noite automático
