@@ -8,13 +8,13 @@
   <style>
     body {
       margin: 0;
-      font-family: 'Arial', sans-serif;
+      font-family: Arial, sans-serif;
       background: linear-gradient(180deg, #0b132b, #000814);
       color: #ffffff;
     }
 
     .container {
-      max-width: 900px;
+      max-width: 950px;
       margin: auto;
       padding: 20px;
     }
@@ -37,9 +37,8 @@
       background: linear-gradient(180deg, #1b2a4e, #121b33);
       border-radius: 16px;
       padding: 20px;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.35);
-      animation: fadeIn 1s ease;
     }
 
     .moment h2 {
@@ -48,7 +47,7 @@
 
     .moment p {
       line-height: 1.6;
-      margin-top: 12px;
+      margin-top: 14px;
     }
 
     footer {
@@ -59,26 +58,16 @@
       color: #e5edff;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* IMAGENS */
+    /* GALERIA */
     .images-row {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 14px;
-      justify-content: center;
-      align-items: flex-start;
-      flex-wrap: nowrap;
-      margin-top: 10px;
-      margin-bottom: 10px;
+      margin: 15px 0;
     }
 
     .image-box {
       text-align: center;
-      width: 210px;
-      flex-shrink: 0;
     }
 
     .moment-img {
@@ -95,22 +84,16 @@
       color: #e5edff;
       opacity: 0.85;
     }
-
-    @media (max-width: 600px) {
-      .images-row {
-        flex-wrap: wrap;
-      }
-    }
   </style>
 </head>
 
 <body>
-
 <div class="container">
+
   <h1>Nossa História 🤍</h1>
   <div class="subtitle">Um pedacinho de tudo que vivemos juntos</div>
 
-  <!-- ONDE TUDO COMEÇOU -->
+  <!-- INÍCIO -->
   <div class="moment">
     <h2>🌱 Onde tudo começou</h2>
 
@@ -119,12 +102,10 @@
         <img src="imagens/inicio.jpeg" class="moment-img">
         <p class="img-caption">Nosso primeiro contato 🤍</p>
       </div>
-
       <div class="image-box">
         <img src="imagens/inicio2.png" class="moment-img">
         <p class="img-caption">Mesmo longe, já era especial</p>
       </div>
-
       <div class="image-box">
         <img src="imagens/inicio3.png" class="moment-img">
         <p class="img-caption">Nossa primeira conversa no WhatsApp</p>
@@ -132,12 +113,12 @@
     </div>
 
     <p>
-      Aqui foi o nosso primeiro contato, que, independente da distância,
+      Aqui foi o nosso primeiro contato que, independente da distância,
       foi a coisa mais especial que já me aconteceu.
     </p>
   </div>
 
-  <!-- ALGUNS MOMENTOS -->
+  <!-- MOMENTOS -->
   <div class="moment">
     <h2>✨ Alguns momentos</h2>
 
@@ -146,20 +127,25 @@
         <img src="imagens/momento1.jpeg" class="moment-img">
         <p class="img-caption">A gente jogando o jogo do sapinho 🤍</p>
       </div>
-
       <div class="image-box">
         <img src="imagens/momento2.jpeg" class="moment-img">
-        <p class="img-caption">Primeiro que vc me ganhou X1 (eu claramente deixei vc ganhar)</p>
+        <p class="img-caption">Primeiro X1 que você ganhou.</p>
       </div>
-
       <div class="image-box">
         <img src="imagens/momento3.jpeg" class="moment-img">
         <p class="img-caption">Nosso primeiro X1 (eu amassei)</p>
       </div>
-
       <div class="image-box">
         <img src="imagens/momento4.jpeg" class="moment-img">
-        <p class="img-caption">A gente jogando Fears to Fathom no Roblox</p>
+        <p class="img-caption">Jogando Fears to Fathom no Roblox</p>
+      </div>
+      <div class="image-box">
+        <img src="imagens/momento5.png" class="moment-img">
+        <p class="img-caption">Jogando 99 noites no Roblox</p>
+      </div>
+      <div class="image-box">
+        <img src="imagens/momento6.png" class="moment-img">
+        <p class="img-caption">Jogando o jogo da Peppa no Roblox</p>
       </div>
     </div>
 
@@ -170,13 +156,10 @@
   <div class="moment">
     <h2>💌 O que eu sinto por você</h2>
     <p>
-      O que eu sinto por você é algo que me traz paz.
-É carinho, cuidado e vontade de estar presente, mesmo quando a distância tenta atrapalhar.
-Você faz meus dias mais leves e, sem perceber, se tornou essencial pra mim.
-O que eu sinto por você vai além de palavras simples.
-É saudade, é cuidado, é vontade de proteger e fazer sorrir.
-Mesmo de longe, você consegue me fazer sentir perto, e isso é algo raro e precioso pra mim.
-Você é minha motivação diária, meu propósito e a força que me encoraja a seguir em frente.
+      O que eu sinto por você é algo que me traz paz.  
+      É carinho, cuidado e vontade de estar presente, mesmo quando a distância tenta atrapalhar.  
+      Você faz meus dias mais leves e se tornou essencial pra mim.  
+      Você é minha motivação diária, meu propósito e a força que me encoraja a seguir em frente.
     </p>
   </div>
 
@@ -184,19 +167,18 @@ Você é minha motivação diária, meu propósito e a força que me encoraja a 
   <div class="moment">
     <h2>🌙 O que eu desejo pra nós</h2>
     <p>
-      O que eu desejo pra nós é que possamos ser o abrigo um do outro.
-e que a gente venca a distância, o tempo e qualquer dificuldade. Eu também desejo 
-um futuro com você. Com dias leves, outros difíceis, mas sempre com carinho e amor.
-Quero dividir dias bons e ruins, vitórias e aprendizados.
-Quero crescer com você, sonhar junto, rir das besteiras e saber que, no fim do dia, é você que eu quero ao meu lado.
-Enquanto for com você, tudo vale a pena.
+      Eu desejo que a gente seja abrigo um pro outro.  
+      Que vençamos a distância, o tempo e qualquer dificuldade.  
+      Quero crescer com você, dividir dias bons e ruins, sonhar juntos  
+      e saber que, no fim do dia, é você que eu quero ao meu lado.  
+      Enquanto for com você, tudo vale a pena.
     </p>
   </div>
 
   <footer>
     Feito com amor, só pra você 🤍
   </footer>
-</div>
 
+</div>
 </body>
 </html>
