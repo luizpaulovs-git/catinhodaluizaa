@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PAC RAT 🐭</title>
+<style>
+  body {
+    margin: 0;
+    background: #020617;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    flex-direction: column;
+  }
+  canvas {
+    background: #0f172a;
+    border-radius: 16px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.6);
+  }
+  .controls {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+  .controls button {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    font-size: 22px;
+    background: #f472b6;
+    color: #000;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  }
+  .controls div {
+    display: flex;
+    gap: 5px;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="game" width="500" height="500"></canvas>
+
+<div class="controls">
+  <button onclick="mover('up')">⬆️</button>
+  <div>
+    <button onclick="mover('left')">⬅️</button>
+    <button onclick="mover('down')">⬇️</button>
+    <button onclick="mover('right')">➡️</button>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('game');
+const ctx = canvas.getContext('2d');
+
+const grid = 50;
+const velocidade = 1;
+let jogoComecou = false;
+
+const ratoImg = new Image();
+ratoImg.src = 'imagens/rato.png';
+const armadilhaImg = new Image();
+armadilhaImg.src = 'imagens/ratoeira.png';
+
+let rato = { x: 200, y: 200 };
+
+// inimigos mais desafiadores: 6 ratoeiras
+armadilhas = [
+  {x:0, y:0, dx:velocidade, dy:0, tipo:'reta'},
+  {x:450, y:0, dx:0, dy:velocidade, tipo:'reta'},
+  {x:0, y:450, dx:velocidade, dy:0, tipo:'reta'},
+  {x:450, y:450, dx:0, dy:-velocidade, tipo:'reta'},
+  {x:200, y:0, dx:0, dy:velocidade, tipo:'persegue'},
+  {x:0, y:200, dx:velocidade, dy:0, tipo:'reta'} // antes era persegue
+];
+
+let pontos = [];
+for(let x=50; x<500; x+=100){
+  for(let y=50; y<500; y+=100){
+    pontos.push({x,y});
+  }
+}
+
+function mover(dir){
+  jogoComecou = true;
+  if(dir === 'up' && rato.y-grid >= 0) rato.y -= grid;
+  if(dir === 'down' && rato.y+grid < canvas.height) rato.y += grid;
+  if(dir === 'left' && rato.x-grid >= 0) rato.x -= grid;
+  if(dir === 'right' && rato.x+grid < canvas.width) rato.x += grid;
+}
+function reiniciarJogo() {
+  // jogador
+  rato = { x: 200, y: 200 };
+
+  // inimigos
+  armadilhas = [
+    {x:0, y:0, dx:velocidade, dy:0, tipo:'reta'},
+    {x:450, y:0, dx:0, dy:velocidade, tipo:'reta'},
+    {x:0, y:450, dx:velocidade, dy:0, tipo:'reta'},
+    {x:450, y:450, dx:0, dy:-velocidade, tipo:'reta'},
+    {x:200, y:0, dx:0, dy:velocidade, tipo:'persegue'},
+    {x:0, y:200, dx:velocidade, dy:0, tipo:'persegue'}
+  ];
+
+  // pontos
+  pontos = [];
+  for(let x=50; x<500; x+=100){
+    for(let y=50; y<500; y+=100){
+      pontos.push({x,y});
+    }
+  }
+
+  jogoComecou = false;
+}
+
+
+function loop(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  ctx.fillStyle = '#facc15';
+  pontos.forEach((p,i)=>{
+    ctx.beginPath();
+    ctx.arc(p.x+grid/2, p.y+grid/2, 6,0,Math.PI*2);
+    ctx.fill();
+    if(Math.abs(rato.x-p.x)<25 && Math.abs(rato.y-p.y)<25){
+      pontos.splice(i,1);
+    }
+  });
+
+  armadilhas.forEach(a=>{
+    if(jogoComecou){
+      if(a.tipo === 'reta'){
+        a.x += a.dx;
+        a.y += a.dy;
+        if(a.x <=0 || a.x >= canvas.width - grid) a.dx *= -1;
+        if(a.y <=0 || a.y >= canvas.height - grid) a.dy *= -1;
+      } else if(a.tipo === 'persegue'){
+        if(a.x < rato.x) a.x += velocidade;
+        if(a.x > rato.x) a.x -= velocidade;
+        if(a.y < rato.y) a.y += velocidade;
+        if(a.y > rato.y) a.y -= velocidade;
+      }
+    }
+
+    ctx.drawImage(armadilhaImg, a.x, a.y, grid, grid);
+
+  if(Math.abs(rato.x-a.x)<grid && Math.abs(rato.y-a.y)<grid){
+  alert('💥 O ratinho foi pego!');
+  reiniciarJogo(); // chama a função que reinicia tudo
+}
+
+
+  });
+
+  ctx.drawImage(ratoImg, rato.x, rato.y, grid, grid);
+  requestAnimationFrame(loop);
+}
+
+loop();
+</script>
+
+</body>
+</html>

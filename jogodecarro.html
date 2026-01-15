@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Road Rat 🏎️</title>
+
+<style>
+body {
+  margin: 0;
+  background: #020617;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  color: #fff;
+}
+
+canvas {
+  border-radius: 18px;
+  background: #2b2b2b;
+  box-shadow: 0 0 20px rgba(0,0,0,0.6);
+}
+
+.controls {
+  margin-top: 12px;
+  display: flex;
+  gap: 30px;
+}
+
+.controls button {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: none;
+  font-size: 30px;
+  background: #f472b6;
+  color: #000;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="game" width="360" height="560"></canvas>
+
+<div class="controls">
+  <button onclick="mover(-1)">⬅️</button>
+  <button onclick="mover(1)">➡️</button>
+</div>
+
+<script>
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
+
+/* ===== CONFIG ===== */
+const larguraCarro = 85;
+const alturaCarro = 110;
+const velocidadeBase = 3;
+
+/* ===== FAIXAS ===== */
+const faixas = [
+  canvas.width * 0.25,
+  canvas.width * 0.50,
+  canvas.width * 0.75
+];
+
+/* ===== IMAGENS ===== */
+const playerImg = new Image();
+playerImg.src = "imagens/player.png";
+
+const inimigosImg = [
+  "imagens/carro1.png",
+  "imagens/carro2.png",
+  "imagens/carro3.png",
+  "imagens/carro4.png"
+].map(src => {
+  const img = new Image();
+  img.src = src;
+  return img;
+});
+
+/* ===== JOGADOR ===== */
+const player = {
+  faixa: 1,
+  x: faixas[1] - larguraCarro / 2,
+  y: canvas.height - 140,
+  w: larguraCarro,
+  h: alturaCarro
+};
+
+/* ===== INIMIGOS ===== */
+let inimigos = [];
+let spawnTimer = 0;
+let pontos = 0;
+let jogoAtivo = true;
+
+/* ===== CONTROLE ===== */
+function mover(dir){
+  if(!jogoAtivo) return;
+  player.faixa += dir;
+  if(player.faixa < 0) player.faixa = 0;
+  if(player.faixa > 2) player.faixa = 2;
+  player.x = faixas[player.faixa] - player.w / 2;
+}
+
+/* ===== SPAWN ===== */
+function spawnInimigo(){
+  const faixa = Math.floor(Math.random() * 3);
+  const img = inimigosImg[Math.floor(Math.random() * inimigosImg.length)];
+
+  inimigos.push({
+    img,
+    faixa,
+    x: faixas[faixa] - larguraCarro / 2,
+    y: -alturaCarro,
+    w: larguraCarro,
+    h: alturaCarro,
+    vel: velocidadeBase + Math.random() * 2
+  });
+}
+
+/* ===== COLISÃO ===== */
+function colisao(a,b){
+  return (
+    a.x < b.x + b.w &&
+    a.x + a.w > b.x &&
+    a.y < b.y + b.h &&
+    a.y + a.h > b.y
+  );
+}
+
+/* ===== RESET ===== */
+function resetar(){
+  inimigos = [];
+  pontos = 0;
+  jogoAtivo = true;
+}
+
+/* ===== DESENHAR ESTRADA ===== */
+function desenharEstrada(){
+  // asfalto
+  ctx.fillStyle = "#3a3a3a";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  // faixas
+  ctx.strokeStyle = "#e5e7eb";
+  ctx.lineWidth = 4;
+  ctx.setLineDash([20,20]);
+
+  ctx.beginPath();
+  ctx.moveTo(canvas.width/3,0);
+  ctx.lineTo(canvas.width/3,canvas.height);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(canvas.width*2/3,0);
+  ctx.lineTo(canvas.width*2/3,canvas.height);
+  ctx.stroke();
+
+  ctx.setLineDash([]);
+}
+
+/* ===== LOOP ===== */
+function loop(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  desenharEstrada();
+  function resetar(){
+  inimigos = [];
+  pontos = 0;
+  spawnTimer = 0;
+  jogoAtivo = true;
+
+  // volta o jogador pro centro
+  player.faixa = 1;
+  player.x = faixas[1] - player.w / 2;
+}
+
+
+  // jogador
+  ctx.drawImage(playerImg, player.x, player.y, player.w, player.h);
+
+  // inimigos
+  inimigos.forEach((i,idx)=>{
+    i.y += i.vel;
+    ctx.drawImage(i.img, i.x, i.y, i.w, i.h);
+
+   if(jogoAtivo && colisao(player,i)){
+  jogoAtivo = false;
+
+  setTimeout(()=>{
+    alert("💥 Você bateu!\nPontos: " + pontos);
+    resetar();
+  },100);
+}
+
+
+    if(i.y > canvas.height){
+      inimigos.splice(idx,1);
+      pontos++;
+    }
+  });
+
+  // spawn
+  if(jogoAtivo){
+    spawnTimer++;
+    if(spawnTimer > 45){
+      spawnInimigo();
+      spawnTimer = 0;
+    }
+  }
+
+  // HUD
+  ctx.fillStyle = "#fff";
+  ctx.font = "16px Arial";
+  ctx.fillText("Pontos: " + pontos, 12, 24);
+
+  requestAnimationFrame(loop);
+}
+
+loop();
+</script>
+
+</body>
+</html>
