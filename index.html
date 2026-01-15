@@ -121,6 +121,7 @@ footer span {
     <button onclick="sentimento('sono')">Não consigo dormir 🌙</button>
     <button onclick="sentimento('saudade')">Só queria você aqui 🤍</button>
     <button onclick="irParaMiniJogos()">Mini-jogos 🐭</button>
+    <button class="option-btn" onclick="abrirHistoria()">Nossa História 🤍</button>
   </div>
 
   <script>
@@ -208,7 +209,6 @@ footer span {
   popup.innerHTML = msg;
   popup.classList.add("show");
 
-  // vibração leve (se o celular permitir)
   if (navigator.vibrate) {
     navigator.vibrate([50, 30, 50]); 
   }
@@ -241,8 +241,11 @@ setInterval(mostrarPopup, 20000);
     function irParaMiniJogos() {
       window.location.href = 'paginadejogos.html';
     }
+    function abrirHistoria() {
+    window.location.href = "historia.html";
+  }
 
-    // Modo boa noite automático
+    
     const hora = new Date().getHours();
     if (hora >= 22 || hora < 6) {
       document.body.classList.add('modo-noite');
